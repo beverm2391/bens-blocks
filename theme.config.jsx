@@ -1,7 +1,7 @@
 export default {
-    logo: <span>My Nextra Documentation</span>,
+    logo: <span>Ben&apos;s Blocks</span>,
     project: {
-        link: 'https://github.com/shuding/nextra',
+        link: 'https://github.com/beverm2391/bens-blocks',
     },
     // ...
 }
