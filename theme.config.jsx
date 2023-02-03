@@ -1,7 +1,8 @@
+import mylogo from './logo.jsx'
+
 export default {
-    logo: <span>Ben&apos;s Blocks</span>,
+    logo: mylogo,
     project: {
         link: 'https://github.com/beverm2391/bens-blocks',
     },
-    // ...
 }
