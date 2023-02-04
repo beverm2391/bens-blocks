@@ -1,0 +1,257 @@
+# Extracting Text from PDFs in Python
+
+## Final Code
+By far the most common doc I work with, and the easiest to extract text from. Let's go. 
+
+import { Callout } from 'nextra-theme-docs'
+
+<Callout>
+    This code is straight from [this]() Google Colab notebook. Feel free to play around with it.
+</Callout>
+
+Connect to your Google Drive, so you can access the files you want to extract text from.
+``` python copy
+from google.colab import drive
+drive.mount('/content/drive')
+```
+
+Install the necessary libraries.
+``` python copy
+# If you're not in Google Colab, you can just install them as normal in the command line (without the !)
+!pip install pymupdf
+```
+
+Imports
+``` python copy
+import fitz
+```
+
+Config variables
+``` python copy
+# Path to the pdf file
+filepath = '/content/drive/MyDrive/some-folder/some-pdf.pdf'
+```
+
+The Final Extraction Function. I'm going to show you how it's built by slowly adding more and more functionality. The final function is below, but I'll explain each line as I go.
+``` python copy
+from typing import List, Dict
+
+def parse_pages(doc) -> List[Dict]:
+    full_doc = doc.pages(0, doc.page_count, 1)
+    data = [{"page_num": idx + 1, "page_text": page.get_text("text")} for idx, page in enumerate(full_doc)]
+    print("Parsing complete")
+    return data
+
+# (1) open the doc
+doc = fitz.open(filepath)
+# (2) parse the pages into a list of dicts
+parsed_pages = parse_pages(doc)
+```
+
+There you go! That's it. Now let's break it down.
+
+## Breakdown
+
+Now for the breakdown. I'm going to explain **how** and **why** I include each line in the final function.
+
+So, first thing you have to do is decide how you your function to output the text. You could store it in a list, dict, stack, dataframe, whatever. I'm going to cycle through some different ways to do it.
+
+### Version 1 (Most Basic)
+**Features**
+- load the pdf
+- parse the pages into a list of strings 
+- no list comprehension
+- no type hinting
+
+**Final Data Structure**
+``` python copy
+[
+    "This is the text from page 1",
+    "This is the text from page 2",
+    "This is the text from page 3",
+    ...
+]
+```
+
+``` python copy
+def parse_pages(doc) -> List[str]:
+    # go from page 0 to the last page (doc.page_count), with a step of 1 (i.e. every page)
+    full_doc = doc.pages(0, doc.page_count, 1)
+    # initialize a list to store the text
+    data = []
+    # iterate over all pages
+    for page in full_doc:
+        # get page text
+        text = page.get_text("text")
+        # append text to list
+        data.append(text)
+    
+    # debug
+    print(f"Parsing complete")
+    return data
+
+# (1) open the doc
+doc = fitz.open(filepath)
+# (2) parse the pages into a list of dicts
+parsed_pages = parse_pages(doc)
+```
+
+Boom, super simple. Now let's add some more functionality.
+### Version 1.1 (Add List Comprehension)
+
+**Features**
+- load the pdf
+- parse the pages into a list of strings
+- list comprehension
+- no type hinting
+
+Final data strucure is the same as before.
+
+``` python copy
+def parse_pages(doc):
+    # go from page 0 to the last page (doc.page_count), with a step of 1 (i.e. every page)
+    full_doc = doc.pages(0, doc.page_count, 1)
+    # initialize a list to store the text
+    data = [page.get_text("text") for page in full_doc] # <--- list comprehension
+    # debug
+    print(f"Parsing complete")
+    return data
+
+# (1) open the doc
+doc = fitz.open(filepath)
+# (2) parse the pages into a list of dicts
+parsed_pages = parse_pages(doc)
+```
+
+Without a function, this would look like:
+``` python copy
+full_doc = doc.pages(0, doc.page_count, 1)
+page_list = [page.get_text("text") for page in full]
+```
+
+### Version 1.2 (Add Type Hinting)
+
+**Features**
+- load the pdf
+- parse the pages into a list of strings
+- list comprehension
+- type hinting
+
+Final data strucure is the same as before, but now we have type hinting. This is a great way to make sure your code is clean and readable, as it tells the reader what type of data to expect out of the function.
+
+
+``` python copy
+# import our List type from the typing library
+from typing import List
+
+def parse_pages(doc) -> List[str]:
+    # go from page 0 to the last page (doc.page_count), with a step of 1 (i.e. every page)
+    full_doc = doc.pages(0, doc.page_count, 1)
+    # initialize a list to store the text
+    data = [page.get_text("text") for page in full_doc] # <--- list comprehension
+    # debug
+    print(f"Parsing complete")
+    return data
+
+# (1) open the doc
+doc = fitz.open(filepath)
+# (2) parse the pages into a list of dicts
+parsed_pages = parse_pages(doc)
+```
+
+### Version 2 (Add Page Number)
+
+**Features**
+- load the pdf
+- parse the pages into a list of dicts
+- includes page text and page number
+- type hinting
+- no list comprehension
+
+Final data structure is now a list of dicts, where each dict contains the page number and the text from that page. This adds a bit of complexity. We have to create a dict, add the page number and text to it, and then append it to the list.
+
+**Final Data Structure**
+``` python copy
+[
+    {"page_num": 1, "page_text": "This is the text from page 1"},
+    {"page_num": 2, "page_text": "This is the text from page 2"},
+    {"page_num": 3, "page_text": "This is the text from page 3"},
+    ...
+]
+```
+
+``` python copy
+from typing import List, Dict
+def parse_pages(doc) -> List[Dict]:
+    full_doc = doc.pages(0, doc.page_count, 1)
+    data = []
+    for idx, page in enumerate(full_doc):
+        temp_dict = {"page_num": 0, "page_text" : ""}
+        text = page.get_text("text")
+
+        temp_dict["page_num"] = idx + 1
+        temp_dict["page_text"] = text
+
+        data.append(temp_dict)
+    print(f"Parsing complete")
+    return data
+
+# (1) open the doc
+doc = fitz.open(filepath)
+
+# (2) parse the pages into a list of dicts
+parsed_pages = parse_pages(doc)
+```
+
+### Version 2.1 (Add List Comprehension) (FINAL VERSION)
+
+**Features**
+- load the pdf
+- parse the pages into a list of dicts
+- includes page text and page number
+- list comprehension
+- type hinting
+
+Final data structure is the same as before, but now we have list comprehension.
+
+<Callout>
+    This final list comprehension is a bit more complicated than the previous ones, so make [ChatGPT](https://chat.openai.com) generate it for you!
+</Callout>
+
+**Chat GPT Input**
+
+import Blockquote from '/components/Blockquote'
+
+>FUNCTION: (insert function version 2.0 here) <br/>
+>INSTRUCTION: turn this into list comprehension instead of enumerate
+
+Here's the output, our final function.
+
+``` python copy
+from typing import List, Dict
+def parse_pages(doc) -> List[Dict]:
+    full_doc = doc.pages(0, doc.page_count, 1)
+    data = [{"page_num": idx + 1, "page_text": page.get_text("text")} for idx, page in enumerate(full_doc)]
+    print(f"Parsing complete")
+    return data
+```
+
+Remember the core principles:
+1. Make the code work first
+2. Then make sure you understand it
+
+In this case, after you've used ChatGPT to generate the list comprehension, try to figure out what it's doing. It's a great way to learn! If it doesn't make sense, don't be scared to move on and come back later.
+
+There you go! You've now learned how to parse a PDF into a list of strings or a list of dicts.
+
+### Protected PDFs
+
+## Word
+
+## Powerpoint
+
+## Webpage
+
+## Online E-Book
+
+This one is the hardest **by far**. Mostly because even though you've paid for it, most publishers don't want you to have the complete text of an e-book. This is for fear that you would distribute it illegally. What if, however, you wanted to use it for a NLP project? Well, you're out of luck. This is how I work around it.

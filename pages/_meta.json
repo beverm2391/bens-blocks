@@ -1,4 +1,19 @@
 {
     "index": "Ben's Blocks",
-    "getting-started": "Getting Started"
+    "-" : {
+        "type" : "separator"
+    },
+    "getting-started": "Getting Started",
+    "magic-concepts": "Magic Concepts",
+    "--" : {
+        "type" : "separator"
+    },
+    "projects" : {
+        "title" : "Projects",
+        "type" : "page"
+    },
+    "blocks": {
+        "title" : "Blocks",
+        "type" : "page"
+    }
 }
