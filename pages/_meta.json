@@ -9,11 +9,9 @@
         "type" : "separator"
     },
     "projects" : {
-        "title" : "Projects",
-        "type" : "page"
+        "title" : "Projects"
     },
     "blocks": {
-        "title" : "Blocks",
-        "type" : "page"
+        "title" : "Blocks"
     }
 }
