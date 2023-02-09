@@ -1,0 +1,181 @@
+# How to Automate Your Homework with Machine Learning
+
+## I don't have enough time in the day. 
+
+We all get the same 24 hours, but some people seem to get more done than others.
+
+I'm a full-time graduate student getting two Masters degrees, I work part-time, and I build software with Machine Learning and AI in my leftover time.
+
+I got tired of being overwhelmed with homework, so I started to think about how I could automate it.
+
+The three projects I'm going to walk you through are:
+1. Quizlet Generator
+2. Document Summerizer
+3. Q/A Notes
+4. Research Aggregator
+
+import { Callout } from 'nextra-theme-docs'
+
+<Callout emoji="😰">
+    But Ben! I don't want to code, I just need to cram for this final tomorrow!
+</Callout>
+
+Understood. I'm going to do **2 separate tutorials** for each project. 
+**The first tutorial will show you how to get the project up and running *as fast as possible with little to no coding*.** Start there.
+**The second tutorial will show you how to customize the project to your needs.** (This is where the coding comes in.)
+
+**If you're a developer**, you can find all the source code for these projects on my [GitHub](https//www.github.com/beverm2391). Skip the first tutorial and go straight to the second (where things get fun  😈)
+
+Also, devs, this next section is for you. If you're a non-coder but want to become one, or you're interested in an overview of how this all works, read on. If not, feel free to skip to any of the projects.
+
+**Time to get technical, baby.**
+
+## How does this all work?
+
+Each of these is built in Python on top of a combination of Machine Learning models designed to work with **Natural Language**. My preferred pipeline usually includes:
+1. A sentence embedding model (like [multi-qa-mp-net-base-dot-v1](https://huggingface.co/sentence-transformers/multi-qa-mpnet-base-dot-v1), or [sentence-transformers/paraphrase-MiniLM-L6-v2](https://huggingface.co/sentence-transformers/paraphrase-MiniLM-L6-v2), or some sort of hosted model like [OpenAI](https://platform.openai.com/docs/guides/embeddings) or [Cohere's](https://docs.cohere.ai/docs/embeddings) [embedding](https://www.pinecone.io/learn/vector-embeddings/) models)
+2. A clustering model (like K-Means, or DBSCAN)
+3. A task agnostic LLM (usually GPT-3.5)
+
+Not every project uses all of these, but as things get more complex we'll need to add more models to the pipeline.
+
+Devs, if you haven't read [the original paper on GPT-3](https://arxiv.org/abs/2005.14165), I highly recommend it. Understanding *why* LLMs (Large Language Models) work is the key to understanding how to leverage them past the point of just generating text. I may write a blog post on this in the future.
+
+**My Workflow**
+
+1. Figure out what I want to do
+2. Brainstorm the best way to do it
+3. Prototype in Google Colab
+4. Build a full stack web app with a UI and a Pythonic backend (only for my personal use)
+5. Potentially deploy to a cloud provider for open use (like Heroku or AWS). This depends on interest and if the costs are relatively low. 
+
+## Core Concepts
+
+These concepts are going to be conceptual (not very technical), just a warning. Expect no code here. That being said, you gotta know this stuff.
+
+### Machine Learning
+Traditionally, when we wanted to create algorithms we would do so *deductively*. Meaning, if I want to predict who's going to win the Superbowl this year, I could write something like this:
+``` latex
+win percentage = 2*(gameswon) - 3*(gameslost) + 1.5/(#probowlers) - 2.5 *(injuries)^2 ...
+```
+I'm making this up, but you get the idea. We would write a bunch of rules that would allow us to predict the outcome of a game **based on factors we predict will influence the outcome**. The problem is, what happens when a problem gets so complex that we (as humans) can't identify all the factors that influence the outcome? What happens when we can't even identify the factors that influence the factors that influence the outcome? What happens when we can't even identify the factors that influence the factors that influence the factors that influence the outcome? See where I'm going with this?
+
+So, introducing Machine Learning! Machine Learning is a way of creating algorithms *inductively*. Meaning, we give the algorithm a bunch of data, and it figures out the rules for us.
+
+**Example: Imagine Recognition**
+
+Let's say you're trying to write an algorithm to predict the model of wristwatch from an image. (the marketplace Chrono24 has this feature). You could write a bunch of rules like:
+```
+if (watch has a case like X) and (watch has a dial like X) and ...
+```
+Which would translate to:
+```
+look for some pixels in a circular shape that are X color, then look for some pixels in the shape of numbers, ...
+```
+
+See how this would be essentially impossible? There are so many different types of watches, and so many different ways to describe them. But, if we give the algorithm a bunch of images of watches, it can figure out the rules for us by continuously updating itself.
+
+Image recognition usually works via Convolutional Neural Networks (CNNs) which utiliz *deep learning*, a subset of machine learning.
+
+<Callout>
+    If you want to learn about deep learning, this book *[Grokking Deep Learning](https://www.amazon.com/Grokking-Deep-Learning-Andrew-Trask/dp/1617293709)* by Andrew Trask is one of the best I've read.
+</Callout>
+
+Okay, next concept.
+
+### Natural Language Processing
+
+We can use machine learning to work with text. This is called Natural Language Processing (NLP). 
+With NLP, we can do things like:
+- Generate text
+- Summarize text
+- Translate text
+- Identify the sentiment of text
+- Identify the topic of text
+- etc.
+
+I'm not going to go into detail on how NLP works, but I will say that it's a very complex field. Just know that in NLP, the *input anf output data* are both text.
+
+### LLMs (Large Language Models)
+
+First we had RRN's (Recurrent Neural Networks).
+
+Then we had LSTMs (Long Short Term Memory).
+
+We were stuck here for a long time... then, one day, [Ashish Vaswani](https://www.linkedin.com/in/ashish-vaswani-99892181/) and his team at Google brain, published the paper *[Attention is All you Need](https://arxiv.org/abs/1706.03762)*, which revolutionized the field of NLP. This paper introduced the Transformer, which is the basis for all LLMs.
+
+>Want your brain to hurt? Read the paper. Or for a more digestible version, read this [blog post](https://towardsdatascience.com/attention-is-all-you-need-discovering-the-transformer-paper-73e5ff5e0634).
+
+In 2018, **OpenAI** came along and built the first Autoregressive Transformer model. Some of you might be familiar with [Chat GPT](https://chat.openai.com) - this is the technology that powers it, originally released in 2018 as Generative Pre-Trained Transformer (GPT), then updated to GPT-2 and GPT-3 in 2019 and 2020, respectively. (Now we have GPT-3.5, an updated version of GPT-3).
+
+>Each of these projects incorporates GPT-3/3.5 in some way.
+
+There are **two critical thing you need to understand about this type of LLM** before we move on. 
+
+These models work by **next token prediction** this means that the model is trained to predict the next token in a sequence of text. Essentially, the model is trained to predict the next word in a sentence. **THATS IT**. These models are **just complex data structures**. They cannot reason, they cannot make decisions, they cannot do anything other than predict the next token in a sequence of text. But, when you scale these models up to 175 billion parameters, they *can* get close. This is called **quasi-intelligence**.
+
+#### Quasi-Intelligence
+You guys ever heard a politician speak who sounds really convincing at first but as you listen, you realize that they're actually full of it? That's what I call Quasi-Intelligence. It's the ability to sound intelligent without actually being intelligent. **This is what LLMs are.** They're not intelligent, they're just good at sounding intelligent. This is a **critical concept** to understand, and in terms of written work (text generating) is probably going to be the difference between you getting an 85% or a 100%. Keep that in mind.
+
+This means that any *reliable factual information* we want to get from the model we will have to provide *at some point*. Okay, we're almost done.
+
+### Automation
+When I say **Automate**, I don't mean unsupervised automation. The goal here is not to remove the human from the process. The goal is to build robust tools and machinery (in this case software) that completely changes how things work.
+
+#### Without Automation
+- The assembly line worker builds the car by hand
+- The assembly line worker is limited to building simple cars
+- The assembly line worker is limited to building cars slowly
+
+#### With Automation
+- The production engineer supervises the machines while they build the car
+- The production engineer is free to build more complex cars
+- The production engineer is free to build cars faster
+
+ The goal here is not to build a rocket that flies itself, but to build a robust control panel that allows you to fly the rocket with *significantly* less effort. For example, we won't write a final paper for you, instead, we'll synthesize and review sources, write a rough draft, and then you can edit it to your liking (with more assistance from AI). So the goal here is to **reduce the amount of effort required to do something**, not remove a human from the process. Just want to make that clear before we move on.
+
+## Projects
+
+### Project 1: [Quizlet Generator](/quizlet-generator)
+Parse documents/slides/notes and generate Quizlet flashcards.
+
+**Input**: PDF / DOCX / PPTX / Text<br/>
+**Output**: Link to Quizlet deck<br/>
+**Stack:** Embeddings -> GPT-3.5
+
+## Coming Soon
+### Project 2: [Document Summarizer](/document-summarizer)
+<Callout>
+Coming Soon...
+</Callout>
+Summarize (or query) documents with natural language.
+
+### Project 3: [Query Your Notes](/query-your-notes)
+<Callout>
+Coming Soon...
+</Callout>
+Ask your notes questions. (Especially helpful for open notes tests!)
+
+**Input**: PDF / DOCX / PPTX / Text<br/>
+**Output**: Answer questions about your notes<br/>
+**Stack:** Embeddings -> GPT-3.5
+
+### Project 4: [Research Aggregator](/research-aggregator)
+<Callout>
+Coming Soon...
+</Callout>
+**Input**: PDF / DOCX / PPTX / Text<br/>
+**Output**: Answer questions about research<br/>
+**Stack:** Embeddings -> GPT-3.5
+
+Aggregate large amounts of research literature and query it.
+
+### Project 5: [Automatic Note Taker](/automatic-note-taker)
+<Callout>
+Coming Soon...
+</Callout>
+**Input**: Audio Recording<br/>
+**Output**: Formatted Notes<br/>
+**Stack:** Whisper -> Embeddings -> GPT-3.5
+
+Turn a recording of a lecture into notes.

@@ -1,17 +1,24 @@
 {
-    "index": "Ben's Blocks",
-    "-" : {
-        "type" : "separator"
+    "index": {
+        "title": "Home",
+        "theme": {
+            "typesetting": "article"
+        }
+    },
+    "-": {
+        "type": "separator",
+        "title": "Articles"
     },
     "getting-started": "Getting Started",
     "magic-concepts": "Magic Concepts",
-    "--" : {
-        "type" : "separator"
+    "--": {
+        "type": "separator",
+        "title": "Code"
     },
-    "projects" : {
-        "title" : "Projects"
+    "projects": {
+        "title": "Projects"
     },
     "blocks": {
-        "title" : "Blocks"
+        "title": "Blocks"
     }
 }
