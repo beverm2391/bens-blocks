@@ -69,3 +69,7 @@ a {
 .medium {
   font-weight: 500;
 }
+
+.image {
+  margin: 2rem auto;
+}

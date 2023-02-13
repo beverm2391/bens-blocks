@@ -3,5 +3,6 @@
     "homework-automation" : {
         "title": "Homework Automation"
     },
-    "text-to-flashcard": "Automatic Quizlet Generator"
+    "take-my-quiz" : "Building an AI to Take My Open-Notes Quizzes",
+    "training-GPT-3" : "Training GPT-3 on Your Own Data"
 }
