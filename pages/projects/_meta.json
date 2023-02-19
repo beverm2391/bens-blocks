@@ -4,5 +4,7 @@
         "title": "Homework Automation"
     },
     "take-my-quiz" : "Building an AI to Take My Open-Notes Quizzes",
-    "training-GPT-3" : "Training GPT-3 on Your Own Data"
+    "training-GPT-3" : "Training GPT-3 on Your Own Data",
+    "docworks" : "Docworks",
+    "nlp-cdst" : "AI Mental Health Clinical Decision Support Tool"
 }
