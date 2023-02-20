@@ -1,5 +1,8 @@
 {
     "how-to-use" : "How to Use These Docs",
-    "resources" : "Master Resource List",
+    "resources" : {
+        "title": "Master Resource List",
+        "display": "hidden"
+    },
     "contact" : "Need Help?"
 }

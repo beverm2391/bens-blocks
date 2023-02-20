@@ -14,7 +14,10 @@
         "title": "Articles"
     },
     "getting-started": "Getting Started",
-    "magic-concepts": "Magic Concepts",
+    "magic-concepts": {
+        "title": "Magic Concepts",
+        "display": "hidden"
+    },
     "--": {
         "type": "separator",
         "title": "Code"

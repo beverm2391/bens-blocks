@@ -79,6 +79,14 @@ a {
   margin: 2rem auto;
 }
 
+.dark .diagram {
+  filter: invert(.8);
+}
+
+.diagram {
+  margin: 2rem auto;
+}
+
 .link {
   color: var(--blue-500);
   text-decoration: underline;

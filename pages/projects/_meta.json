@@ -1,10 +1,15 @@
 {
-    "index": "What Are Projects?",
-    "homework-automation" : {
-        "title": "Homework Automation"
+    "index": {
+        "title": "Overview",
+        "display": "hidden"
     },
-    "take-my-quiz" : "Building an AI to Take My Open-Notes Quizzes",
-    "training-GPT-3" : "Training GPT-3 on Your Own Data",
-    "docworks" : "Docworks",
-    "nlp-cdst" : "AI Mental Health Clinical Decision Support Tool"
+    "homework-automation" : {
+        "title": "Homework Automation",
+        "display": "hidden"
+    },
+    "training-GPT-3" : {
+        "title": "Training GPT-3 on Your Own Data",
+        "display": "hidden"
+    },
+    "nlp-cdst" : "AI Mental Health Screening Tool"
 }

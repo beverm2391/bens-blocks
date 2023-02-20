@@ -1,7 +1,9 @@
 import { Callout } from 'nextra-theme-docs'
+import Image from 'next/image'
+import { Diagrams } from '/components/diagrams'
 
 
-# AI Mental Health Clinical Decision Support Tool
+# AI Mental Health Screening Tool
 *AKA NLP-CDST (Natural Language Processing Clinical Decision Support Tool)*  
 
 <Callout type="info" emoji='👾'>
@@ -108,17 +110,20 @@ Answer:
 
 Great Question. In its current state it definitely will be, at least some of the time. This is why its a *Decision Support Tool*, and thus is only meant to provide the physician with information - NOT to make the decision or deliver a diagnosis. The idea is that by equipping the physician with more information, they can make a more informed, and more effective decision.
 
-Let's take a look at the code.
+Let's take a look at how it works.
 
 ## How it Works
+<Diagrams.nlpcdst
+    className='diagram'
+/>
 
-# DIAGRAM GOES HERE
+Here's a diagram of the data flow.
 
 ## Code
 
 ### Setup
 
-Mount Google Drive to access drive files. Later we'll get the DSM-5 pdf.
+Mount Google Drive to access drive files. Later we'll locally access the DSM-5 pdf that you can download [here](https://cdn.website-editor.net/30f11123991548a0af708722d458e476/files/uploaded/DSM%2520V.pdf).
 ``` python copy
 from google.colab import drive
 drive.mount('/content/drive')
@@ -141,7 +146,7 @@ from dotenv import load_dotenv
 ```
 
 I preprocessed the DSM-5 pdf into a list of strings, one for each page. 
-Tutorial : [https://blocks.beneverman.com/blocks/text-extraction/pdf](https://blocks.beneverman.com/blocks/text-extraction/pdf)
+Tutorial : [How to Extract Text From PDF Files in Python](/blocks/text-extraction-pdf)
 
 ```python copy
 # I have already taken my context, in this case the DSM-5 and loaded the text of each page into a list. I used a pdf parser for python called pdfminer.six
