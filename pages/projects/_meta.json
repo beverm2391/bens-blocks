@@ -1,15 +1,9 @@
 {
-    "index": {
-        "title": "Overview",
-        "display": "hidden"
-    },
+    "nlp-cdst" : "AI Mental Health Screening Tool",
+    "semantics-cloud" : "Semantics Cloud",
+    "ai-summarizer" : "Advanced Summarization with AI",
     "homework-automation" : {
         "title": "Homework Automation",
         "display": "hidden"
-    },
-    "training-GPT-3" : {
-        "title": "Training GPT-3 on Your Own Data",
-        "display": "hidden"
-    },
-    "nlp-cdst" : "AI Mental Health Screening Tool"
+    }
 }

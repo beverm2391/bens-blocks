@@ -9,15 +9,6 @@
             "typesetting": "article"
         }
     },
-    "-": {
-        "type": "separator",
-        "title": "Articles"
-    },
-    "getting-started": "Getting Started",
-    "magic-concepts": {
-        "title": "Magic Concepts",
-        "display": "hidden"
-    },
     "--": {
         "type": "separator",
         "title": "Code"
