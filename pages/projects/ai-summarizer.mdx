@@ -16,7 +16,7 @@ I started playing with GPT-3 in November of 2021. I quickly realized I could lev
 3. Answer open book questions (you provide the context in the prompt)
 4. Answer closed book questions (semi-accurately)
 
-They are essentially *complex data structures that can be queried with natural language*. When scaled up to billions of params, increased performance on un-trained benchmarks *emerges*, and we get these psuedo-intelligent feeling models like GPT-3. However, they are not perfect. For summarization, they have a few major limitations that I will discuss.
+They are essentially *complex data structures that can be queried with natural language*. When scaled up to billions of params, increased performance on un-trained benchmarks *emerges*, and we get these pseudo-intelligent feeling models like GPT-3. However, they are not perfect. For summarization, they have a few major limitations that I will discuss.
 
 In my case, I want to generate accurate and thoughtful summaries (with sources) from a single or multiple source documents. Not just to read, but because summarizing scientific journals is one of my assignments! Later, I'll integrate this into my process of writing research papers.
 
@@ -30,7 +30,7 @@ In my case, I want to generate accurate and thoughtful summaries (with sources) 
 
 ### Test 1: Summarize X (closed-book)
 
-Let's do some tests. For this one, I'll ask chatGPT to summarize a concept for me. I'm going to follow the same theme throught this post, so you can compare the results of each method.
+Let's do some tests. For this one, I'll ask chatGPT to summarize a concept for me. I'm going to follow the same theme throughout this post, so you can compare the results of each method.
 
 <Image src="/images/ai-summarizer/test-1.png" alt="test 1" className='image' width={1000} height={500} />
 
@@ -146,7 +146,7 @@ Here's a demo of my summarizer in action. My plan is to integrate this into [sem
 
 Pretty sweet, right? I'm really happy with the results - it's a huge improvement over an out-of-the-box LLM.
 
-Here's the debug output. You can see that in total, I made 9 calls in link one, 3 calls in link two (I'm batching them so you dont see them all in the output), and 1 call in link three. The total time was 38.74 seconds.
+Here's the debug output. You can see that in total, I made 9 calls in link one, 3 calls in link two (I'm batching them so you don't see them all in the output), and 1 call in link three. The total time was 38.74 seconds.
 
 ```
 Starting Chain
@@ -252,7 +252,7 @@ def sanitize_metadata(data):
     return data
 ```
 
-This first function is called `sanitize_metadata` and takes in a list of items and checks each item's metadata for any values that are `None`. If it finds any `None` values, it replaces them with an empty string. The function then returns the original list with the updated metadata. We'll use this to sanatize the PDF's metadata. If we don't do this, we can hit errors when we try to pass the metadata to the OpenAI API.
+This first function is called `sanitize_metadata` and takes in a list of items and checks each item's metadata for any values that are `None`. If it finds any `None` values, it replaces them with an empty string. The function then returns the original list with the updated metadata. We'll use this to sanitize the PDF's metadata. If we don't do this, we can hit errors when we try to pass the metadata to the OpenAI API.
 
 ``` python copy
 def sanitize_text(text):
@@ -537,7 +537,7 @@ class Document:
     
     def get_citation(self, format: str):
         citation_chat = Chat(temperature=0.9)
-        get_citation_prompt = f"Use this metadata to generate a ciation in {format} format: \n\n{self.metadata}"
+        get_citation_prompt = f"Use this metadata to generate a citation in {format} format: \n\n{self.metadata}"
         final_citation = citation_chat(get_citation_prompt)
         self.citation = final_citation
         return self
@@ -663,7 +663,7 @@ class AsyncChain:
 
 This code defines a class called `AsyncChain` that contains methods for running a chain of tasks asynchronously using asyncio. 
 
-The `__init__` method takes a Document object as input and passes all of its attributes to the `AcyncChain` object. 
+The `__init__` method takes a Document object as input and passes all of its attributes to the `AsyncChain` object. 
 
 The `link_1` method generates prompts for identifying main ideas, relevant quotes, and relevant passages from the context. It then uses the `run_chat_async` function to generate responses to these prompts for each chunk of text in the document. It splits the responses into chunks of 3 and creates a list of dictionaries containing the chunk number, prompt type, and response for each response. It sets the `link_1_responses` attribute to the list of responses and `link_1_response_dicts` attribute to the list of dictionaries. 
 
